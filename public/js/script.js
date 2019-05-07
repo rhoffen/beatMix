@@ -1,9 +1,20 @@
 // Drum Arrays
-let kicks = Array(16).fill(false);
-let snares = Array(16).fill(false);
-let hiHats = Array(16).fill(false);
-let rideCymbals = Array(16).fill(false);
+const drumArrayMax = 16;
+const drumArrayMaxIndex = drumArrayMax - 1;
+let kicks = Array(drumArrayMax).fill(false);
+let snares = Array(drumArrayMax).fill(false);
+let hiHats = Array(drumArrayMax).fill(false);
+let rideCymbals = Array(drumArrayMax).fill(false);
 
+// Convert string to drum array identifier
+const drumId = {
+    "kicks": kicks,
+    "snares": snares,
+    "hiHats": hiHats,
+    "rideCymbals": rideCymbals
+}
+
+// Toggle function
 const toggle = elementToChange => {
     if (elementToChange === true) {
         return false
@@ -12,57 +23,43 @@ const toggle = elementToChange => {
     }
 }
 
+// Check valid drum type
+const isValidDrumType = drumParam => {
+    if (Object.keys(drumId).includes(drumParam)) {
+        return true
+    } else {
+        console.log("Missing or invalid drum type");
+        return false
+    }
+}
+
+// Check valid index
+const isValidIndex = index => {
+    if (Number.isInteger(index) && index >= 0 && index <= drumArrayMaxIndex) {
+        return true
+    } else {
+        console.log("Missing or invalid index");
+        return false
+    }
+};
+
+// Toggles the value in a given drum array at a given index
 const toggleDrum = (arrayName, index) => {
-
-    if (!arrayName || index == undefined || index < 0 || index > 15) {
-        return;
-    }
-
-    let elementToChange;
-
-    switch (arrayName) {
-        case "kicks" :  elementToChange = kicks[index];
-                        kicks[index] = toggle(elementToChange);
-                        break;
-        case "snares":  elementToChange = snares[index];
-                        snares[index] = toggle(elementToChange);
-                        break;
-        case "hiHats":  elementToChange = hiHats[index];
-                        hiHats[index] = toggle(elementToChange);
-                        break;
-        case "rideCymbals": elementToChange = rideCymbals[index];
-                        rideCymbals[index] = toggle(elementToChange);
-                        break;
-        default: console.log("Invalid drum type");
+    if (isValidDrumType(arrayName) && isValidIndex(index)) {
+        drumId[arrayName][index] = toggle(drumId[arrayName][index]);
     }
 }
 
+// Converts all the values in a given drum array to false
 const clear = arrayName => {
-    switch (arrayName) {
-        case "kicks" :  kicks.fill(false);
-                        break;
-        case "snares":  snares.fill(false);
-                        break;
-        case "hiHats":  hiHats.fill(false);
-                        break;
-        case "rideCymbals": rideCymbals.fill(false);
-                        break;
-        default: console.log("Invalid drum type");
+    if (isValidDrumType(arrayName)) {
+        drumId[arrayName].fill(false)
     }
 }
 
+// Toggles all the elements in a given drum array
 const invert = arrayName => {
-    switch (arrayName) {
-        case "kicks" :  //console.log(kicks);
-                        kicks.forEach((item,index) => kicks[index] = toggle(item));
-                        //console.log(kicks);
-                        break;
-        case "snares":  snares.forEach((item,index) => snares[index] = toggle(item));
-                        break;
-        case "hiHats":  hiHats.forEach((item,index) => hiHats[index] = toggle(item));
-                        break;
-        case "rideCymbals": rideCymbals.forEach((item,index) => rideCymbals[index] = toggle(item));
-                        break;
-        default: console.log("Invalid drum type");
+    if (isValidDrumType(arrayName)) {
+        drumId[arrayName].forEach((item,index) => drumId[arrayName][index] = toggle(item));
     }
 }
