@@ -4,6 +4,13 @@ let snares = Array(16).fill(false);
 let hiHats = Array(16).fill(false);
 let rideCymbals = Array(16).fill(false);
 
+const arrayId = {
+    "kicks": kicks,
+    "snares": snares,
+    "hiHats": hiHats,
+    "rideCymbals": rideCymbals
+}
+
 const toggle = elementToChange => {
     if (elementToChange === true) {
         return false
