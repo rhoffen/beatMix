@@ -25,22 +25,24 @@ const isValidMethod = method => {
     }
 }
 
+//Set request status
+const setStatus = (method, index) => {
+    
+    if (!isValidMethod(method)) {
+        return 400
+    } else if (!isValidIndex(index)) {
+        return 404
+    } else {
+        return 200
+    }
+};
+
 // Complete this function:
 const presetHandler = (method, index, newPresetArray) => {
-    let status;
+ 
     let response = [];
-
-    if (isValidIndex(index)) {
-        status = 200;
-    } else {
-        status = 404;
-    }
-
-    if (!isValidMethod(method)) {
-        status = 400;
-    }
-
-    response.push(status);
+    
+    response.push(setStatus(method, index));
 
     switch (method) {
         case "GET" :    response.push(presets[index]);
