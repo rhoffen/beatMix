@@ -63,3 +63,15 @@ const invert = arrayName => {
         drumId[arrayName].forEach((item,index) => drumId[arrayName][index] = toggle(item));
     }
 }
+
+// Plays multiple synthesizer tones at once
+const getNeighborPads = (x, y, size) => {
+
+    if (x < 0 || y < 0 || x >= size || y >=size) {
+        return [];
+    }
+
+    const neighbors = [[x+1,y], [x-1, y], [x, y+1], [x, y-1]];
+ 
+    return neighbors.filter(neighbor => neighbor.every(item => item >= 0 && item < size));
+}
